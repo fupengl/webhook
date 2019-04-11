@@ -1,8 +1,7 @@
-
-#!/bin/sh
+#!/usr/bin/env bash
 
 ### BEGIN INIT INFO
-# Provides:   gitlab-webhook
+# Provides:   webhook
 # Required-Start:    $local_fs $remote_fs $network $syslog $named
 # Required-Stop:     $local_fs $remote_fs $network $syslog $named
 # Default-Start:     2 3 4 5
@@ -12,15 +11,15 @@
 ### END INIT INFO
 
 PATH=/usr/bin
-DAEMON=/usr/sbin/gitlab-webhook
-NAME=gitlab-webhook
-DESC=gitlab-webhook
+DAEMON=/usr/sbin/webhook
+NAME=webhook
+DESC=webhook
 
 test -x $DAEMON || exit 0
 
 set -e
 
-PID=/run/gitlab-webhook.pid
+PID=/run/webhook.pid
 
 start() {
     start-stop-daemon --start --quiet --pidfile $PID \
