@@ -24,7 +24,7 @@ type GitlabRepository struct {
 type GitLabProject struct {
 	Name              string
 	Description       string
-	PathWithNamespace string
+	PathWithNamespace string `json:"path_with_namespace"`
 	Namespace         string
 }
 
