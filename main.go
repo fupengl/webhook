@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -168,7 +167,7 @@ func hookHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(string(data))
+	log.Println("Input: " + string(data))
 
 	//unmarshal request body
 	err = json.Unmarshal(data, &hook)
