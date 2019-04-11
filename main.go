@@ -46,6 +46,7 @@ type Webhook struct {
 	ProjectID         int
 	Repository        GitlabRepository
 	Commits           []Commit
+	EventName         string
 	TotalCommitsCount int
 }
 
@@ -184,7 +185,7 @@ func hookHandler(w http.ResponseWriter, r *http.Request) {
 
 		//execute commands for repository
 		for _, cmd := range repo.Commands {
-			var command = exec.Command(cmd)
+			var command = exec.Command(cmd, hook.Repository.Name, hook.Repository.URL, hook.EventName, hook.Ref)
 			out, err := command.Output()
 			if err != nil {
 				log.Printf("Failed to execute command: %s", err)
