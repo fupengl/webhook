@@ -4,16 +4,9 @@
   "port": 3344,
   "repositories": [
     {
-      "name": "foo",
+      "name": "deploy_test",
       "commands": [
-        "/home/bar/deploy.sh",
-        "/home/bar/cleanup.sh"
-      ]
-    },
-    {
-      "name": "foobar",
-      "commands": [
-        "/usr/bin/true"
+        "./bash/build.sh"
       ]
     }
   ]
