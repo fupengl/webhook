@@ -1,18 +1,19 @@
 #!/usr/bin/env bash
 
-echo "build $1"
+echo "build web: $1"
 
 projectDir="project/$1"
 
-if [ ! -f "$1" ]; then
-  git clone $2 $projectDir
-fi
+devServer="root@dev1.pinquest.cn"
+devServerDeployPath="/home/pinfire/weblogic/public/$1"
 
 cd $projectDir
 
 case "$4" in
   "refs/heads/master")
     npm run build
+    ssh $devServer mkdir -p $devServerDeployPath
+    rsync -a dist/* $devServer:$devServerDeployPath
     ;;
 
   "refs/heads/develop")

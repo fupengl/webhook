@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -201,6 +202,7 @@ func hookHandler(w http.ResponseWriter, r *http.Request) {
 			}
 			log.Println("Executed: " + cmd)
 			log.Println("Output: " + string(out))
+			fmt.Println(string(out))
 		}
 	}
 }
