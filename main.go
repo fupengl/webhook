@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -166,6 +167,8 @@ func hookHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Failed to read request: %s", err)
 		return
 	}
+
+	fmt.Println(string(data))
 
 	//unmarshal request body
 	err = json.Unmarshal(data, &hook)
