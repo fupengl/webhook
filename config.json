@@ -6,8 +6,8 @@
     {
       "name": "deploy_test",
       "commands": [
-        "./bash/git.sh",
-        "./bash/build_web.sh"
+        "bash/git.sh",
+        "bash/build_web.sh"
       ]
     }
   ]

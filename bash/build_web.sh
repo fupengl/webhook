@@ -12,11 +12,11 @@ cd $projectDir
 
 case "$4" in
   "refs/heads/master")
-    echo "123"
+    npm run build
     ;;
 
   "refs/heads/develop")
-    git fetch --all && git reset --hard develop && git pull origin develop
+    npm run build:dev
     ;;
 esac
 
