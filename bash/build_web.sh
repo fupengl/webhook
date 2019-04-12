@@ -8,6 +8,7 @@ devServer="root@dev1.pinquest.cn"
 devServerDeployPath="/home/pinfire/weblogic/public/$1"
 
 cd $projectDir
+npm i --registry=https://registry.npm.taobao.org
 
 case "$4" in
   "refs/heads/master")
@@ -18,8 +19,8 @@ case "$4" in
 
   "refs/heads/develop")
     npm run build:dev
-    ssh $devServer mkdir -p $devServerDeployPath
-    rsync -a dist/* $devServer:$devServerDeployPath
+    mkdir -p $devServerDeployPath
+    cp -ufr ./dist/* $devServerDeployPath
     ;;
 esac
 
