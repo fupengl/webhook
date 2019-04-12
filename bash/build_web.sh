@@ -5,12 +5,12 @@ echo "build web: $1"
 projectDir="project/$1"
 
 devServer="root@dev1.pinquest.cn"
-devServerDeployPath="/home/pinfire/weblogic/public/$1"
+devServerDeployPath="/home/pinfire/weblogic/public/$2"
 
 cd $projectDir
 npm i --registry=https://registry.npm.taobao.org
 
-case "$4" in
+case "$5" in
   "refs/heads/master")
     npm run build
     ssh $devServer mkdir -p $devServerDeployPath

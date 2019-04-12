@@ -194,7 +194,7 @@ func hookHandler(w http.ResponseWriter, r *http.Request) {
 
 		//execute commands for repository
 		for _, cmd := range repo.Commands {
-			var command = exec.Command(cmd, hook.Project.PathWithNamespace, hook.Repository.URL, hook.EventName, hook.Ref)
+			var command = exec.Command(cmd, hook.Project.PathWithNamespace, hook.Project.Name, hook.Repository.URL, hook.EventName, hook.Ref)
 			out, err := command.Output()
 			if err != nil {
 				log.Printf("Failed to execute command: %s", err)
