@@ -188,7 +188,7 @@ func hookHandler(w http.ResponseWriter, r *http.Request) {
 
 	//find matching config for repository name
 	for _, repo := range config.Repositories {
-		if repo.Name != hook.Repository.Name {
+		if repo.Name != hook.Project.PathWithNamespace {
 			continue
 		}
 

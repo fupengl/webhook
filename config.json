@@ -4,7 +4,14 @@
   "port": 3344,
   "repositories": [
     {
-      "name": "deploy_test",
+      "name": "web/deploy_test",
+      "commands": [
+        "bash/git.sh",
+        "bash/build_web.sh"
+      ]
+    },
+    {
+      "name": "web/shop_admin",
       "commands": [
         "bash/git.sh",
         "bash/build_web.sh"
