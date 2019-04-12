@@ -16,6 +16,13 @@
         "bash/git.sh",
         "bash/build_web.sh"
       ]
+    },
+    {
+      "name": "web/msports-pc",
+      "commands": [
+        "bash/git.sh",
+        "bash/build_web.sh"
+      ]
     }
   ]
 }
