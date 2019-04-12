@@ -14,14 +14,15 @@ if [ ! -f "$1" ]; then
 fi
 
 cd $projectDir
+git fetch --all
 
 case "$4" in
   "refs/heads/master")
-    git fetch --all && git reset --hard master && git pull origin master
+    git checkout -f master && git reset --hard master && git pull origin master
     ;;
 
   "refs/heads/develop")
-    git fetch --all && git reset --hard develop && git pull origin develop
+    git checkout -f develop && git reset --hard develop && git pull origin develop
     ;;
 esac
 
