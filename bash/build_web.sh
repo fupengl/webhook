@@ -4,8 +4,9 @@ echo "build web: $1"
 
 projectDir="project/$1"
 
-devServer="root@dev1.pinquest.cn"
-devServerDeployPath="/home/pinfire/weblogic/public/$2"
+prodServer="root@120.79.155.84"
+
+DeployPath="/home/pinfire/weblogic/public/$2"
 
 cd $projectDir
 npm i --registry=https://registry.npm.taobao.org
@@ -13,14 +14,14 @@ npm i --registry=https://registry.npm.taobao.org
 case "$5" in
   "refs/heads/master")
     npm run build
-    ssh $devServer mkdir -p $devServerDeployPath
-    rsync -a dist/* $devServer:$devServerDeployPath
+    ssh $prodServer mkdir -p $DeployPath
+    rsync -a dist/* $prodServer:$DeployPath
     ;;
 
   "refs/heads/develop")
     npm run build:dev
-    mkdir -p $devServerDeployPath
-    cp -ufr ./dist/* $devServerDeployPath
+    mkdir -p $DeployPath
+    cp -ufr ./dist/* $DeployPath
     ;;
 esac
 
