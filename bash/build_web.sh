@@ -18,6 +18,8 @@ case "$4" in
 
   "refs/heads/develop")
     npm run build:dev
+    ssh $devServer mkdir -p $devServerDeployPath
+    rsync -a dist/* $devServer:$devServerDeployPath
     ;;
 esac
 
