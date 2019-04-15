@@ -15,13 +15,15 @@ case "$5" in
   "refs/heads/master")
     npm run build
     ssh $prodServer mkdir -p $DeployPath
-    rsync -a dist/* $prodServer:$DeployPath
+    rsync -avz --progress dist/* $prodServer:$DeployPath
+    echo "deploy prod server successfully"
     ;;
 
   "refs/heads/develop")
     npm run build:dev
     mkdir -p $DeployPath
     cp -ufr ./dist/* $DeployPath
+    echo "deploy develop server successfully"
     ;;
 esac
 

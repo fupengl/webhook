@@ -11,14 +11,21 @@
       ]
     },
     {
-      "name": "web/shop_admin",
+      "name": "web/msports-pc",
       "commands": [
         "bash/git.sh",
         "bash/build_web.sh"
       ]
     },
     {
-      "name": "web/msports-pc",
+      "name": "web/msports-admin",
+      "commands": [
+        "bash/git.sh",
+        "bash/build_web.sh"
+      ]
+    },
+    {
+      "name": "web/gialen",
       "commands": [
         "bash/git.sh",
         "bash/build_web.sh"
