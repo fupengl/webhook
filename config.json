@@ -30,6 +30,14 @@
         "bash/git.sh",
         "bash/build_web.sh"
       ]
+    },
+    {
+      "name": "web/tvs-admin",
+      "alias": "tvs",
+      "commands": [
+        "bash/git.sh",
+        "bash/build_web.sh"
+      ]
     }
   ]
 }

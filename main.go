@@ -62,6 +62,7 @@ type Webhook struct {
 //ConfigRepository represents a repository from the config file
 type ConfigRepository struct {
 	Name     string
+	Alias    string
 	Commands []string
 }
 
@@ -192,9 +193,14 @@ func hookHandler(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 
+		deployUri := hook.Project.Name
+		if (len(repo.Alias) != 0) {
+			deployUri = repo.Alias
+		}
+
 		//execute commands for repository
 		for _, cmd := range repo.Commands {
-			var command = exec.Command(cmd, hook.Project.PathWithNamespace, hook.Project.Name, hook.Repository.URL, hook.EventName, hook.Ref)
+			var command = exec.Command(cmd, hook.Project.PathWithNamespace, deployUri, hook.Repository.URL, hook.EventName, hook.Ref)
 			out, err := command.Output()
 			if err != nil {
 				log.Printf("Failed to execute command: %s", err)
