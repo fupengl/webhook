@@ -32,8 +32,31 @@
       ]
     },
     {
+      "name": "web/ad-admin",
+      "alias": "ad",
+      "commands": [
+        "bash/git.sh",
+        "bash/build_web.sh"
+      ]
+    },
+    {
+      "name": "web/microcast-admin",
+      "alias": "wb",
+      "commands": [
+        "bash/git.sh",
+        "bash/build_web.sh"
+      ]
+    },
+    {
       "name": "web/tvs-admin",
       "alias": "tvs",
+      "commands": [
+        "bash/git.sh",
+        "bash/build_web.sh"
+      ]
+    },
+    {
+      "name": "web/admin",
       "commands": [
         "bash/git.sh",
         "bash/build_web.sh"
