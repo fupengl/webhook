@@ -146,21 +146,12 @@ func main() {
 }
 
 func loadConfig(configFile string) (Config, error) {
-	file, err := os.Open(configFile)
-	if err != nil {
-		return Config{}, err
-	}
-	defer file.Close()
-
-	buffer := make([]byte, 1024)
-	count := 0
-
-	count, err = file.Read(buffer)
+	file, err := ioutil.ReadFile(configFile)
 	if err != nil {
 		return Config{}, err
 	}
 
-	err = json.Unmarshal(buffer[:count], &config)
+	err = json.Unmarshal(file, &config)
 	if err != nil {
 		return Config{}, err
 	}
