@@ -41,7 +41,9 @@ func main() {
 		os.Exit(1)
 	}
 
+	// set gitlab global config and job
 	gitlab.SetConfig(config)
+	gitlab.SetJob(make(chan gitlab.JobItem, 100))
 
 	// setting logging output
 	log.SetOutput(writer)

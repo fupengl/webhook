@@ -1,31 +1,37 @@
 #!/usr/bin/env bash
 
-echo "build web: $1"
+# $WEBHOOK_PROJECT_NAME repository namespace
+# $WEBHOOK_DEPLOY_PATH repository deploy path
+# $WEBHOOK_REPOSITORY_URL repository url
+# $WEBHOOK_REPOSITORY_EVENT event
+# $WEBHOOK_REPOSITORY_BRANCH branch
 
-projectDir="project/$1"
+echo "build web: $WEBHOOK_PROJECT_NAME"
+
+projectDir="project/$WEBHOOK_PROJECT_NAME"
 
 prodServer="root@120.79.155.84"
 
-DeployPath="/home/pinfire/weblogic/public/$2"
+DeployPath="/home/pinfire/weblogic/public/$WEBHOOK_DEPLOY_PATH"
 
 cd $projectDir
 
 npm config set strict-ssl false 
 npm i -s -f --no-audit --no-package-lock --package-lock-only --global-style --no-shrinkwrap --reg=https://registry.npm.taobao.org
 
-case "$5" in
-  "refs/heads/master")
+case "$WEBHOOK_REPOSITORY_BRANCH" in
+  "master")
     npm run build
     ssh $prodServer mkdir -p $DeployPath
     rsync -avz --progress dist/* $prodServer:$DeployPath
-    echo "deploy $2 prod server successfully"
+    echo "deploy $WEBHOOK_DEPLOY_PATH prod server successfully"
     ;;
 
-  "refs/heads/develop")
+  "develop")
     npm run build:dev
     mkdir -p $DeployPath
     cp -ufr ./dist/* $DeployPath
-    echo "deploy $2 develop server successfully"
+    echo "deploy $WEBHOOK_DEPLOY_PATH develop server successfully"
     ;;
 esac
 

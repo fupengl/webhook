@@ -1,30 +1,33 @@
 #!/usr/bin/env bash
 
-# $1 repository namespace
-# $2 repository name
-# $3 repository url
-# $4 event
-# $5 branch
+# $WEBHOOK_PROJECT_NAME repository namespace
+# $WEBHOOK_DEPLOY_PATH repository deploy path
+# $WEBHOOK_REPOSITORY_URL repository url
+# $WEBHOOK_REPOSITORY_EVENT event
+# $WEBHOOK_REPOSITORY_BRANCH branch
 
-echo "sync code $1"
+echo "sync code $WEBHOOK_PROJECT_NAME"
 
-projectDir="project/$1"
+projectDir="project/$WEBHOOK_PROJECT_NAME"
 
-if [ ! -f "$1" ]; then
-  git clone $3 $projectDir
+if [ ! -f "$projectDir" ]; then
+  echo "cloning $WEBHOOK_PROJECT_NAME"
+  git clone $WEBHOOK_REPOSITORY_URL $projectDir
 fi
 
 cd $projectDir
 git fetch --all
 
-case "$5" in
-  "refs/heads/master")
-    git checkout -f master && git reset --hard master && git pull origin master
+case "$WEBHOOK_REPOSITORY_BRANCH" in
+  "master")
     ;;
 
-  "refs/heads/develop")
-    git checkout -f develop && git reset --hard develop && git pull origin develop
+  "develop")
     ;;
 esac
+
+git checkout -f $WEBHOOK_REPOSITORY_BRANCH
+git reset --hard $WEBHOOK_REPOSITORY_BRANCH
+git pull origin $WEBHOOK_REPOSITORY_BRANCH
 
 exit 0
