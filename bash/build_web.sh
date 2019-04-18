@@ -18,6 +18,7 @@ cd $projectDir
 
 npm config set strict-ssl false 
 npm i -s -f --no-audit --no-package-lock --package-lock-only --global-style --no-shrinkwrap --reg=https://registry.npm.taobao.org
+rm -rf dist/
 
 case "$WEBHOOK_REPOSITORY_BRANCH" in
   "master")
