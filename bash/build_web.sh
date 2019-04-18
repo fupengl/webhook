@@ -10,7 +10,7 @@ echo "build web: $WEBHOOK_PROJECT_NAME"
 
 projectDir="project/$WEBHOOK_PROJECT_NAME"
 
-prodServer="root@120.79.155.84"
+prodServer=("root@172.18.111.162")
 
 DeployPath="/home/pinfire/weblogic/public/$WEBHOOK_DEPLOY_PATH"
 
@@ -23,8 +23,12 @@ rm -rf dist/
 case "$WEBHOOK_REPOSITORY_BRANCH" in
   "master")
     npm run build
-    ssh $prodServer mkdir -p $DeployPath
-    rsync -avz --progress dist/* $prodServer:$DeployPath
+    for server in ${prodServer[@]}
+    do
+        ssh $prodServer mkdir -p $DeployPath
+        rsync -avz --progress dist/* $server:$DeployPath
+        echo "deploy to "$server
+    done
     echo "deploy $WEBHOOK_DEPLOY_PATH prod server successfully"
     ;;
 
