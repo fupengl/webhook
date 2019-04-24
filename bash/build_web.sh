@@ -26,7 +26,7 @@ case "$WEBHOOK_REPOSITORY_BRANCH" in
     npm run build
     for server in ${prodServer[@]}
     do
-        ssh $prodServer mkdir -p $DeployPath
+        ssh $server mkdir -p $DeployPath
         rsync -avz --progress dist/* $server:$DeployPath
         echo "deploy to "$server
     done
@@ -37,7 +37,7 @@ case "$WEBHOOK_REPOSITORY_BRANCH" in
     npm run build:dev
     for server in ${devServer[@]}
     do
-        ssh $prodServer mkdir -p $DeployPath
+        ssh $server mkdir -p $DeployPath
         rsync -avz --progress dist/* $server:$DeployPath
         echo "deploy to "$server
     done
