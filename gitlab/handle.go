@@ -34,7 +34,7 @@ func worker(jobChan <-chan JobItem) {
 		select {
 		case job := <-jobChan:
 			// execute commands for repository
-			log.Printf("执行任务 %s \n", job.Hook.Project.Name)
+			log.Printf("Executed task %s \n", job.Hook.Project.Name)
 
 			deployPath := job.Hook.Project.Name
 			if (len(job.Repo.Alias) != 0) {
@@ -57,7 +57,7 @@ func worker(jobChan <-chan JobItem) {
 					log.Fatal("Failed to execute command: %s", err)
 					continue
 				}
-				log.Println("Executed: " + cmd)
+				log.Println("Executed bash: " + cmd)
 				log.Println("Output: " + string(out))
 			}
 		default:

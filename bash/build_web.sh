@@ -6,7 +6,7 @@
 # $WEBHOOK_REPOSITORY_EVENT event
 # $WEBHOOK_REPOSITORY_BRANCH branch
 
-echo "\n> build web: $WEBHOOK_PROJECT_NAME"
+echo "> build web: $WEBHOOK_PROJECT_NAME"
 
 projectDir="project/$WEBHOOK_PROJECT_NAME"
 
@@ -24,7 +24,7 @@ case "$WEBHOOK_REPOSITORY_BRANCH" in
     yarn && yarn build
     for server in ${prodServer[@]}
     do
-        echo "\n> deploy to "$server" ... \n"
+        echo "> deploy to "$server" ..."
         ssh $server mkdir -p $DeployPath
         rsync -avz --progress dist/* $server:$DeployPath
     done
@@ -35,7 +35,7 @@ case "$WEBHOOK_REPOSITORY_BRANCH" in
     yarn && yarn build:dev
     for server in ${devServer[@]}
     do
-        echo "\n> deploy to "$server" ..."
+        echo "> deploy to "$server" ..."
         ssh $server mkdir -p $DeployPath
         rsync -avz --progress dist/* $server:$DeployPath
     done

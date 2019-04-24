@@ -6,7 +6,7 @@
 # $WEBHOOK_REPOSITORY_EVENT event
 # $WEBHOOK_REPOSITORY_BRANCH branch
 
-echo "\n> pull code $WEBHOOK_PROJECT_NAME"
+echo "> pull code $WEBHOOK_PROJECT_NAME"
 
 projectDir="project/$WEBHOOK_PROJECT_NAME"
 
