@@ -18,10 +18,16 @@ import (
 var config gitlab.Config
 var configFile string
 
+func middleware(handlerFunc http.HandlerFunc) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.HandlerFunc(handlerFunc).ServeHTTP(w, r)
+	})
+}
+
 func main() {
 	args := os.Args
 
-	//if we have a "real" argument we take this as conf path to the config file
+	// if we have a "real" argument we take this as conf path to the config file
 	if len(args) > 1 {
 		configFile = args[1]
 	} else {
@@ -49,7 +55,7 @@ func main() {
 	log.SetOutput(writer)
 
 	// mounted gitlab handle
-	http.HandleFunc("/", gitlab.HookHandler)
+	http.Handle("/", middleware(gitlab.HookHandler))
 
 	address := fmt.Sprintf("%s:%d", config.Address, config.Port)
 	log.Println(fmt.Sprintf("Listening on %s", address))
