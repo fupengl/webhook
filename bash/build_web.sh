@@ -17,31 +17,29 @@ DeployPath="/home/pinfire/weblogic/public/$WEBHOOK_DEPLOY_PATH"
 
 cd $projectDir
 
-npm config set strict-ssl false 
-npm i -s -f --no-audit --no-package-lock --package-lock-only --global-style --no-shrinkwrap --reg=https://registry.npm.taobao.org
 rm -rf dist/
 
 case "$WEBHOOK_REPOSITORY_BRANCH" in
   "master")
-    npm run build
+    yarn && yarn build
     for server in ${prodServer[@]}
     do
         ssh $server mkdir -p $DeployPath
         rsync -avz --progress dist/* $server:$DeployPath
-        echo "deploy to "$server
+        echo "> deploy to "$server"..."
     done
-    echo "deploy $WEBHOOK_DEPLOY_PATH prod server successfully"
+    echo "> deploy $WEBHOOK_DEPLOY_PATH prod server successfully"
     ;;
 
   "develop")
-    npm run build:dev
+    yarn && yarn build:dev
     for server in ${devServer[@]}
     do
         ssh $server mkdir -p $DeployPath
         rsync -avz --progress dist/* $server:$DeployPath
-        echo "deploy to "$server
+        echo "> deploy to "$server"..."
     done
-    echo "deploy $WEBHOOK_DEPLOY_PATH develop server successfully"
+    echo "> deploy $WEBHOOK_DEPLOY_PATH develop server successfully"
     ;;
 esac
 
