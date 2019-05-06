@@ -11,9 +11,13 @@ source ./bash/git_branch.sh
 echo "> build web: $WEBHOOK_PROJECT_NAME"
 
 projectDir="project/$WEBHOOK_PROJECT_NAME"
+base=$(cd "$(dirname "$0")";pwd)
 
 cd $projectDir
-$branchHash=$(get_branch_hash)
+
+branchHash=$(get_branch_hash)
+
+localPkg="$base/../pkg/$WEBHOOK_PROJECT_NAME/$branchHash"
 
 prodServer=("root@172.18.111.162")
 devServer=("root@172.18.239.251")
@@ -21,10 +25,6 @@ devServer=("root@172.18.239.251")
 DeployDir="/home/pinfire/weblogic/public"
 DeployPath="$DeployDir/$WEBHOOK_DEPLOY_PATH"
 PkgPath="/var/webpkg/$WEBHOOK_PROJECT_NAME/$branchHash"
-LocalPkg="pkg/$WEBHOOK_PROJECT_NAME/${$branchHash}"
-
-echo $DeployPath
-echo $PkgPath
 
 function deploy() {
     echo "> deploy to $1 ..."
@@ -36,9 +36,8 @@ function deploy() {
 
 function checkexec() {
     if [ ! -z "$1"  ]; then
-      if [ ! -f "$LocalPkg" ]; then
-        `$1`
-        mkdir -p $LocalPkg && cp -rf dist/* $LocalPkg
+      if [ ! -d "$localPkg" ]; then
+        eval $1 && mkdir -p $localPkg && cp -rf dist/* $localPkg
       fi
     fi
 }
