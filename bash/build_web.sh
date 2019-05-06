@@ -12,6 +12,8 @@ echo "> build web: $WEBHOOK_PROJECT_NAME"
 
 projectDir="project/$WEBHOOK_PROJECT_NAME"
 
+cd $projectDir
+
 prodServer=("root@172.18.111.162")
 devServer=("root@172.18.239.251")
 
@@ -24,10 +26,6 @@ function deploy() {
     rsync -avz --progress dist/* $1:$PkgPath
     echo "> deploy $1 server successfully"
 }
-
-cd $projectDir
-
-rm -rf dist/
 
 case "$WEBHOOK_REPOSITORY_BRANCH" in
   "master")
