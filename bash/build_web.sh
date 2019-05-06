@@ -16,7 +16,7 @@ prodServer=("root@172.18.111.162")
 devServer=("root@172.18.239.251")
 
 DeployPath="/home/pinfire/weblogic/public/$WEBHOOK_DEPLOY_PATH"
-PkgPath="/var/webpkg/$WEBHOOK_PROJECT_NAME$(get_bran_hash)"
+PkgPath="/var/webpkg/$WEBHOOK_PROJECT_NAME/$(get_bran_hash)"
 
 function deploy() {
     echo "> deploy to $1 ..."
