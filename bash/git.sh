@@ -10,7 +10,7 @@ echo "> pull code $WEBHOOK_PROJECT_NAME branch $WEBHOOK_REPOSITORY_BRANCH"
 
 projectDir="project/$WEBHOOK_PROJECT_NAME"
 
-if [ ! -f "$projectDir" ]; then
+if [ ! -d "$projectDir" ]; then
   echo "cloning $WEBHOOK_PROJECT_NAME"
   git clone $WEBHOOK_REPOSITORY_URL $projectDir
 fi
