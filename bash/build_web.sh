@@ -6,7 +6,7 @@
 # $WEBHOOK_REPOSITORY_EVENT event
 # $WEBHOOK_REPOSITORY_BRANCH branch
 
-source ./git_branch.sh
+source ./bash/git_branch.sh
 
 echo "> build web: $WEBHOOK_PROJECT_NAME"
 
@@ -17,13 +17,18 @@ cd $projectDir
 prodServer=("root@172.18.111.162")
 devServer=("root@172.18.239.251")
 
-DeployPath="/home/pinfire/weblogic/public/$WEBHOOK_DEPLOY_PATH"
-PkgPath="/var/webpkg/$WEBHOOK_PROJECT_NAME/$(get_bran_hash)"
+DeployDir="/home/pinfire/weblogic/public"
+DeployPath="$DeployDir/$WEBHOOK_DEPLOY_PATH"
+PkgPath="/var/webpkg/$WEBHOOK_PROJECT_NAME/$(get_branch_hash)"
+
+echo $DeployPath
+echo $PkgPath
 
 function deploy() {
     echo "> deploy to $1 ..."
-    ssh $server mkdir -p "$DeployPath $PkgPath && ln -s $PkgPath $DeployPath"
+    ssh $server "mkdir -p $DeployDir $PkgPath"
     rsync -avz --progress dist/* $1:$PkgPath
+    ssh $server "rm -rf $DeployPath && ln -s $PkgPath $DeployPath"
     echo "> deploy $1 server successfully"
 }
 

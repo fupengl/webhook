@@ -16,7 +16,7 @@ function parse_git_hash() {
 }
 
 # get ${branch}@${hash}
-function get_bran_hash() {
+function get_branch_hash() {
   echo $(parse_git_branch)$(parse_git_hash)
 }
 
