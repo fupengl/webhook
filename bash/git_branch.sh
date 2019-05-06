@@ -15,6 +15,8 @@ function parse_git_hash() {
   git rev-parse --short HEAD 2> /dev/null | sed "s/\(.*\)/@\1/"
 }
 
-GIT_BRANCH=$(parse_git_branch)$(parse_git_hash)
-echo ${GIT_BRANCH}
+# get ${branch}@${hash}
+function get_bran_hash() {
+  echo $(parse_git_branch)$(parse_git_hash)
+}
 
