@@ -29,7 +29,7 @@ PkgPath="/var/webpkg/$WEBHOOK_PROJECT_NAME/$branchHash"
 function deploy() {
     echo "> deploy to $1 ..."
     ssh $server "mkdir -p $DeployDir $PkgPath"
-    rsync -avz --progress LocalPkg/* $1:$PkgPath
+    rsync -avz --progress $localPkg/* $1:$PkgPath
     ssh $server "rm -rf $DeployPath && ln -s $PkgPath $DeployPath"
     echo "> deploy $1 server successfully"
 }
