@@ -20,42 +20,42 @@ branchHash=$(get_branch_hash)
 localPkg="$base/../pkg/$WEBHOOK_PROJECT_NAME/$branchHash"
 
 prodServer=("root@172.18.111.162")
-devServer=("root@172.18.239.251")
+devServer=("root@172.18.239.251" "root@172.18.111.168")
 
 DeployDir="/home/pinfire/weblogic/public"
 DeployPath="$DeployDir/$WEBHOOK_DEPLOY_PATH"
-PkgPath="/var/webpkg/$WEBHOOK_PROJECT_NAME/$branchHash"
+PkgPath="/home/pinfire/webpkg/$WEBHOOK_PROJECT_NAME/$branchHash"
 
 function deploy() {
     echo "> deploy to $1 ..."
-    ssh $server "mkdir -p $DeployDir $PkgPath"
-    rsync -avz --progress $localPkg/* $1:$PkgPath
-    ssh $server "rm -rf $DeployPath && ln -s $PkgPath $DeployPath"
+    ssh $server "mkdir -p $2 $PkgPath" || exit 1
+    rsync -avz --progress $localPkg/* $1:$PkgPath || exit 1
+    ssh $server "rm -rf $2 && ln -s $PkgPath $2" || exit 1
     echo "> deploy $1 server successfully"
 }
 
 function checkexec() {
     if [ ! -z "$1"  ]; then
       if [ ! -d "$localPkg" ]; then
-        eval $1 && mkdir -p $localPkg && cp -rf dist/* $localPkg
+        eval $1 && mkdir -p $localPkg && cp -rf dist/* $localPkg || exit 1
       fi
     fi
 }
 
 case "$WEBHOOK_REPOSITORY_BRANCH" in
   "master")
-    checkexec "yarn && yarn build"
-    for server in ${prodServer[@]}
+    checkexec "yarn --no-lockfile && yarn build"
+    for server in "${prodServer[@]}"
     do
-        deploy $server
+        deploy "$server" "$DeployPath"
     done
     ;;
 
   "develop")
-    checkexec "yarn && yarn build:dev"
-    for server in ${devServer[@]}
+    checkexec "yarn --no-lockfile && yarn build:dev"
+    for server in "${devServer[@]}"
     do
-        deploy $server
+        deploy "$server" "$DeployPath"
     done
     ;;
 esac
