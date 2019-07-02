@@ -16,7 +16,6 @@ if [ ! -d "$projectDir" ]; then
 fi
 
 cd $projectDir
-git clean
 git fetch --all
 
 case "$WEBHOOK_REPOSITORY_BRANCH" in

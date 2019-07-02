@@ -28,23 +28,23 @@ PkgPath="/home/pinfire/webpkg/$WEBHOOK_PROJECT_NAME/$branchHash"
 
 function deploy() {
     echo "> deploy to $1 ..."
-    ssh $server "mkdir -p $2 $PkgPath" || exit 1
-    rsync -avz --progress $localPkg/* $1:$PkgPath || exit 1
-    ssh $server "rm -rf $2 && ln -s $PkgPath $2" || exit 1
+    ssh $server "mkdir -p $2 $PkgPath" || exit 0
+    rsync -avz --progress $localPkg/* $1:$PkgPath || exit 0
+    ssh $server "rm -rf $2 && ln -s $PkgPath $2" || exit 0
     echo "> deploy $1 server successfully"
 }
 
 function checkexec() {
     if [ ! -z "$1"  ]; then
       if [ ! -d "$localPkg" ]; then
-        eval $1 && mkdir -p $localPkg && cp -rf dist/* $localPkg || exit 1
+        eval $1 && mkdir -p $localPkg && cp -rf dist/* $localPkg || exit 0
       fi
     fi
 }
 
 case "$WEBHOOK_REPOSITORY_BRANCH" in
   "master")
-    checkexec "yarn --no-lockfile && yarn build"
+    checkexec "yarn && yarn build"
     for server in "${prodServer[@]}"
     do
         deploy "$server" "$DeployPath"
@@ -52,7 +52,7 @@ case "$WEBHOOK_REPOSITORY_BRANCH" in
     ;;
 
   "develop")
-    checkexec "yarn --no-lockfile && yarn build:dev"
+    checkexec "yarn && yarn build:dev"
     for server in "${devServer[@]}"
     do
         deploy "$server" "$DeployPath"
