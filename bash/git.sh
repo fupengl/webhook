@@ -28,6 +28,6 @@ esac
 
 git checkout -f $WEBHOOK_REPOSITORY_BRANCH
 git reset --hard $WEBHOOK_REPOSITORY_BRANCH
-git pull origin $WEBHOOK_REPOSITORY_BRANCH
+git pull origin --no-edit $WEBHOOK_REPOSITORY_BRANCH
 
 exit 0
